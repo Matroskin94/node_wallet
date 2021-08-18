@@ -1,12 +1,20 @@
+require('dotenv/config');
+
 const express = require('express');
+const morgan = require('morgan');
+
 const app = express();
 
-const APP_PORT = 3000;
+app.use(express.json());
+app.use(morgan('tiny'));
+
+const port = process.env.PORT;
+const api = process.env.API_URL;
 
 app.get('/', (req, res) => {
   res.send('Hello API');
 });
 
-app.listen(APP_PORT, () => {
-  console.log("Server is running on port: " + APP_PORT);
+app.listen(port, () => {
+  console.log("Server is running on port: " + port);
 });
