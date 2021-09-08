@@ -8,7 +8,7 @@ import { Currency } from "./shcemes/currencySchema";
 const app = express();
 
 app.use(express.json());
-// app.use(morgan('tiny'));
+app.use(morgan('tiny'));
 
 const port = process.env.PORT;
 const api = process.env.API_URL;
@@ -36,6 +36,12 @@ app.post(`${api}/currencies`, (req, res) => {
         success: false
       })
     });
+});
+
+app.get(`${api}/currencies`, async (req, res) => {
+  const currencyList = await Currency.find();
+
+  res.send(currencyList);
 });
 
 app.listen(port, () => {
