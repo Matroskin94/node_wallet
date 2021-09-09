@@ -6,8 +6,8 @@ const router = express.Router();
 
 router.post('/', (req, res) => {
   const replenishment = new Replenishment({
-    name: req.body.name,
-    code: req.body.code
+    type: req.body.type,
+    comment: req.body.comment
   });
 
   replenishment

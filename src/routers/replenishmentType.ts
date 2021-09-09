@@ -38,7 +38,7 @@ router.delete('/:id', (req, res) => {
     if (replenishmentType) {
       return res.status(200).json({success: true, message: 'Replenishment type was deleted'});
     } else {
-      return res.status(404).json({success: false, message: 'Replenishment type deleted'})
+      return res.status(404).json({success: false, message: 'Replenishment type not deleted'})
     }
   }).catch(err => {
     return res.status(400).json({success: false, err})
