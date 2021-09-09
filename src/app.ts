@@ -1,47 +1,28 @@
-import express from "express";
-import morgan from "morgan";
-import "dotenv/config";
+import express from 'express';
+import morgan from 'morgan';
+import 'dotenv/config';
 
-import connectToMongo from "./dbConnection";
-import { Currency } from "./shcemes/currencySchema";
+import connectToMongo from './dbConnection';
+import { productsRouter, replenishmentTypeRouter, wasteTypeRouter, replenishmentRouter } from './routers'
+
+const port = process.env.PORT;
+const api = process.env.API_URL;
 
 const app = express();
 
 app.use(express.json());
 app.use(morgan('tiny'));
 
-const port = process.env.PORT;
-const api = process.env.API_URL;
+// Routers
+app.use(`${api}/currencies`, productsRouter);
+app.use(`${api}/replenishmentTypes`, replenishmentTypeRouter);
+app.use(`${api}/wasteTypes`, wasteTypeRouter);
+app.use(`${api}/replenishment`, replenishmentRouter);
 
 connectToMongo();
 
 app.get('/', (req, res) => {
   res.send('Hello API');
-});
-
-app.post(`${api}/currencies`, (req, res) => {
-  const currency = new Currency({
-    name: req.body.name,
-    code: req.body.code
-  });
-
-  currency
-    .save()
-    .then(( createdCurrency ) => {
-      res.status(201).json(createdCurrency);
-    })
-    .catch((err) => {
-      res.status(500).json({
-        error: err,
-        success: false
-      })
-    });
-});
-
-app.get(`${api}/currencies`, async (req, res) => {
-  const currencyList = await Currency.find();
-
-  res.send(currencyList);
 });
 
 app.listen(port, () => {
