@@ -33,4 +33,26 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.get('/:id', async (req, res) => {
+  const wasteType = await WasteType.findById(req.params.id);
+
+  if (wasteType) {
+    res.status(200).send(wasteType);
+  } else {
+    res.status(500).json({ message: 'Waste type with given ID not found'})
+  }
+});
+
+router.delete('/:id', (req, res) => {
+  WasteType.findByIdAndRemove(req.params.id).then(wasteType => {
+    if (wasteType) {
+      return res.status(200).json({success: true, message: 'Waste type was deleted'});
+    } else {
+      return res.status(404).json({success: false, message: 'Waste type not deleted'})
+    }
+  }).catch(err => {
+    return res.status(400).json({success: false, err})
+  });
+});
+
 export { router };

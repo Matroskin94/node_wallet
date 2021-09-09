@@ -33,6 +33,17 @@ router.get('/', async (req, res) => {
   }
 });
 
+
+router.get('/:id', async (req, res) => {
+  const replenishmentType = await ReplenishmentType.findById(req.params.id);
+
+  if (replenishmentType) {
+    res.status(200).send(replenishmentType);
+  } else {
+    res.status(500).json({ message: 'Replenishment type with given ID not found'})
+  }
+});
+
 router.delete('/:id', (req, res) => {
   ReplenishmentType.findByIdAndRemove(req.params.id).then(replenishmentType => {
     if (replenishmentType) {

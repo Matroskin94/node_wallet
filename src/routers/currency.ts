@@ -33,6 +33,16 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.get('/:id', async (req, res) => {
+  const currency = await Currency.findById(req.params.id);
+
+  if (currency) {
+    res.status(200).send(currency);
+  } else {
+    res.status(500).json({ message: 'Currency with given ID not found'})
+  }
+});
+
 router.delete('/:id', (req, res) => {
   Currency.findByIdAndRemove(req.params.id).then(currency => {
     if (currency) {
