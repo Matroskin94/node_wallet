@@ -56,4 +56,20 @@ router.delete('/:id', (req, res) => {
   });
 });
 
+router.put('/:id', async (req, res) => {
+  const updatedReplenishmentType = await ReplenishmentType.findByIdAndUpdate(req.params.id, {
+    name: req.body.name,
+    code: req.body.code
+  });
+
+  if (updatedReplenishmentType) {
+    res.status(200).send(updatedReplenishmentType);
+  } else {
+    res.status(500).json({
+      message: 'Replenishment type did not update',
+      success: false
+    });
+  }
+});
+
 export { router };

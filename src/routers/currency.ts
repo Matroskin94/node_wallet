@@ -55,4 +55,20 @@ router.delete('/:id', (req, res) => {
   });
 });
 
+router.put('/:id', async (req, res) => {
+  const updatedCurrency = await Currency.findByIdAndUpdate(req.params.id, {
+    name: req.body.name,
+    code: req.body.code
+  });
+
+  if (updatedCurrency) {
+    res.status(200).send(updatedCurrency);
+  } else {
+    res.status(500).json({
+      message: 'Currency did not update',
+      success: false
+    });
+  }
+});
+
 export { router };

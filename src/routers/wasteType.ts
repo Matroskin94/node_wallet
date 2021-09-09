@@ -55,4 +55,20 @@ router.delete('/:id', (req, res) => {
   });
 });
 
+router.put('/:id', async (req, res) => {
+  const updatedWasteType = await WasteType.findByIdAndUpdate(req.params.id, {
+    name: req.body.name,
+    code: req.body.code,
+  });
+
+  if (updatedWasteType) {
+    res.status(200).send(updatedWasteType);
+  } else {
+    res.status(500).json({
+      message: 'Waste type did not update',
+      success: false
+    });
+  }
+});
+
 export { router };

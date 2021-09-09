@@ -5,6 +5,7 @@ const userPass = process.env.DB_PASS;
 const dbName = process.env.DB_NAME;
 
 const dbConfig = {
+  useFindAndModify: false,
   useNewUrlParser: true,
   useUnifiedTopology: true,
   dbName

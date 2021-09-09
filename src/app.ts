@@ -3,7 +3,13 @@ import morgan from 'morgan';
 import 'dotenv/config';
 
 import connectToMongo from './dbConnection';
-import { productsRouter, replenishmentTypeRouter, wasteTypeRouter, replenishmentRouter } from './routers'
+import {
+  productsRouter,
+  replenishmentTypeRouter,
+  wasteTypeRouter,
+  replenishmentRouter,
+  wastesRouter
+} from './routers'
 
 const port = process.env.PORT;
 const api = process.env.API_URL;
@@ -17,7 +23,8 @@ app.use(morgan('tiny'));
 app.use(`${api}/currencies`, productsRouter);
 app.use(`${api}/replenishmentTypes`, replenishmentTypeRouter);
 app.use(`${api}/wasteTypes`, wasteTypeRouter);
-app.use(`${api}/replenishment`, replenishmentRouter);
+app.use(`${api}/replenishments`, replenishmentRouter);
+app.use(`${api}/wastes`, wastesRouter);
 
 connectToMongo();
 

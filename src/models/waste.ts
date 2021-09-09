@@ -1,9 +1,9 @@
 import { model, Schema } from 'mongoose';
  
-const replenishmentShema = new Schema({
+const wasteShema = new Schema({
   type: {
     type: Schema.Types.ObjectId,
-    ref: 'ReplenishmentType',
+    ref: 'WasteType',
     required: true
   },
 	comment: String,
@@ -22,4 +22,4 @@ const replenishmentShema = new Schema({
   }
 });
 
-export const Replenishment = model('Replenishment', replenishmentShema);
+export const Waste = model('Waste', wasteShema);
