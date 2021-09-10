@@ -22,4 +22,12 @@ const replenishmentShema = new Schema({
   }
 });
 
+replenishmentShema.virtual('id').get(function() {
+  return this._id.toHexString();
+});
+
+replenishmentShema.set('toJSON', {
+  virtuals: true
+});
+
 export const Replenishment = model('Replenishment', replenishmentShema);

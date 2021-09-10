@@ -11,4 +11,12 @@ const currencyShema = new Schema({
   }
 });
 
+currencyShema.virtual('id').get(function() {
+  return this._id.toHexString();
+});
+
+currencyShema.set('toJSON', {
+  virtuals: true
+});
+
 export const Currency = model('Currency', currencyShema);

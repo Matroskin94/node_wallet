@@ -11,4 +11,12 @@ const replenishmentTypeShema = new Schema({
   }
 });
 
+replenishmentTypeShema.virtual('id').get(function() {
+  return this._id.toHexString();
+});
+
+replenishmentTypeShema.set('toJSON', {
+  virtuals: true
+});
+
 export const ReplenishmentType = model('ReplenishmentType', replenishmentTypeShema);

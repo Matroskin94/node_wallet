@@ -22,4 +22,12 @@ const wasteShema = new Schema({
   }
 });
 
+wasteShema.virtual('id').get(function() {
+  return this._id.toHexString();
+});
+
+wasteShema.set('toJSON', {
+  virtuals: true
+});
+
 export const Waste = model('Waste', wasteShema);
