@@ -64,4 +64,14 @@ router.delete('/:id', (req, res) => {
   });
 });
 
+router.get('/get/count', async (req, res) => {
+  const wasteCount = await Waste.countDocuments((count) => count);
+
+  if (wasteCount) {
+    res.send({count: wasteCount});
+  } else {
+    res.status(500).json({success: false});
+  }
+});
+
 export { router };

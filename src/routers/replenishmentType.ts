@@ -72,4 +72,14 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+router.get('/get/count', async (req, res) => {
+  const replenishmentTypesCount = await ReplenishmentType.countDocuments((count) => count);
+
+  if (replenishmentTypesCount) {
+    res.send({count: replenishmentTypesCount});
+  } else {
+    res.status(500).json({success: false});
+  }
+});
+
 export { router };

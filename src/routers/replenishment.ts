@@ -63,4 +63,14 @@ router.delete('/:id', (req, res) => {
   });
 });
 
+router.get('/get/count', async (req, res) => {
+  const replenishmentCount = await Replenishment.countDocuments((count) => count);
+
+  if (replenishmentCount) {
+    res.send({count: replenishmentCount});
+  } else {
+    res.status(500).json({success: false});
+  }
+});
+
 export { router };

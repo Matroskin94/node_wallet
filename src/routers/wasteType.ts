@@ -71,4 +71,14 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+router.get('/get/count', async (req, res) => {
+  const wastesCount = await WasteType.countDocuments((count) => count);
+
+  if (wastesCount) {
+    res.send({count: wastesCount});
+  } else {
+    res.status(500).json({success: false});
+  }
+});
+
 export { router };

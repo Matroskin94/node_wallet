@@ -71,4 +71,14 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+router.get('/get/count', async (req, res) => {
+  const currenciesCount = await Currency.countDocuments((count) => count);
+
+  if (currenciesCount) {
+    res.send({count: currenciesCount});
+  } else {
+    res.status(500).json({success: false});
+  }
+});
+
 export { router };
