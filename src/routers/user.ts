@@ -1,11 +1,14 @@
 import express from 'express';
+import bcrypt from 'bcrypt';
 
 import { User } from '../models';
 
 const router = express.Router();
 
+const salt = bcrypt.genSaltSync(13);
+
 router.get('/', async (req, res) => {
-  const userList = await User.find();
+  const userList = await User.find().select('-passwordHash');
 
   if (!userList) {
     res.status(500).json({ success: false });
@@ -15,7 +18,7 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/:id', async (req, res) => {
-  const user = await User.findById(req.params.id);
+  const user = await User.findById(req.params.id).select('-passwordHash');
 
   if (user) {
     res.status(200).send(user);
@@ -29,7 +32,7 @@ router.post('/', async (req, res) => {
     name: req.body.name,
     surname: req.body.surname,
     email: req.body.email,
-    passwordHash: req.body.password
+    passwordHash: bcrypt.hashSync(req.body.password, salt)
   });
   user = await user.save();
 
