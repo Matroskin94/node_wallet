@@ -11,6 +11,7 @@ import {
   wastesRouter,
   userRouter
 } from './routers'
+import { errorHandler, jwtRequestProtect } from './middlewares';
 
 const port = process.env.PORT;
 const api = process.env.API_URL;
@@ -19,6 +20,8 @@ const app = express();
 
 app.use(express.json());
 app.use(morgan('tiny'));
+app.use(jwtRequestProtect());
+app.use(errorHandler);
 
 // Routers
 app.use(`${api}/currencies`, productsRouter);
